@@ -1,6 +1,8 @@
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
-require('telescope').setup {
+local telescope = require('telescope')
+local lga_actions = require("telescope-live-grep-args.actions")
+telescope.setup {
   defaults = {
     mappings = {
       i = {
@@ -9,10 +11,22 @@ require('telescope').setup {
       },
     },
   },
+  extensions = {
+    live_grep_args = {
+      auto_quoting = true,
+      mappings = {
+        i = {
+          ['<C-k>'] = lga_actions.quote_prompt(),
+          ['<C-i>'] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+        },
+      }
+    }
+  }
 }
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
+pcall(require('telescope').load_extension, 'live_grep_args')
 
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
@@ -29,6 +43,9 @@ local builtin = require('telescope.builtin')
 local search_all_files = function()
   builtin.find_files({ no_ignore=true })
 end
+
+local lga_shortcuts = require("telescope-live-grep-args.shortcuts")
+
 vim.keymap.set('n', '<leader>gf', builtin.git_files, { desc = 'Search [G]it [F]iles' })
 vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sa', search_all_files, { desc = '[S]earch [A]ll Files' })
@@ -36,3 +53,4 @@ vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' 
 vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>fg', lga_shortcuts.grep_visual_selection, { desc = 'Live Grep Args' })
