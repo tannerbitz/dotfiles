@@ -41,13 +41,16 @@ end, { desc = '[/] Fuzzily search in current buffer' })
 
 local builtin = require('telescope.builtin')
 local search_all_files = function()
-  builtin.find_files({ no_ignore=true })
+  builtin.find_files({ hidden=true, no_ignore=true })
 end
 
 local lga_shortcuts = require("telescope-live-grep-args.shortcuts")
 
 vim.keymap.set('n', '<leader>gf', builtin.git_files, { desc = 'Search [G]it [F]iles' })
-vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>sf', function()
+  builtin.find_files( {hidden=true} )
+end
+, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sa', search_all_files, { desc = '[S]earch [A]ll Files' })
 vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
