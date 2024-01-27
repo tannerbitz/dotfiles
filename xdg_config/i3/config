@@ -40,6 +40,13 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
+# use the brightness function keys on the keyboard.  to enable this:
+#       install brightnessctl `sudo apt install brightnessctl`
+#       install udev rules from  https://github.com/Hummer12007/brightnessctl.git (cp to /etc/udev/rules.d/)
+#       add user to the video group with `usermod -a -G video ${USER}
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
+
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
 set $up k
