@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-dotfiles_dir=~/repos/dotfiles
+dotfiles_dir=${0:a:h}
 
 sudo rm -rf ~/.config/i3
 sudo rm -rf ~/.config/nvim
