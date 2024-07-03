@@ -14,16 +14,20 @@ return {
     -- Creates a beautiful debugger UI
     'rcarriga/nvim-dap-ui',
 
+    "theHamsta/nvim-dap-virtual-text",
+    "nvim-neotest/nvim-nio",
+
     -- Installs the debug adapters for you
     'williamboman/mason.nvim',
     'jay-babu/mason-nvim-dap.nvim',
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
+
   },
   config = function()
     local dap = require 'dap'
-    local dapui = require 'dapui'
+    local ui = require 'dapui'
 
     require('mason-nvim-dap').setup {
       -- Makes a best effort to setup the various debuggers with
@@ -54,7 +58,7 @@ return {
 
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
-    dapui.setup {
+    ui.setup {
       -- Set icons to characters that are more likely to work in every terminal.
       --    Feel free to remove or use ones that you like more! :)
       --    Don't feel like these are good choices.
@@ -75,11 +79,11 @@ return {
     }
 
     -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-    vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: See last session result.' })
+    vim.keymap.set('n', '<F7>', ui.toggle, { desc = 'Debug: See last session result.' })
 
-    dap.listeners.after.event_initialized['dapui_config'] = dapui.open
-    dap.listeners.before.event_terminated['dapui_config'] = dapui.close
-    dap.listeners.before.event_exited['dapui_config'] = dapui.close
+    dap.listeners.after.event_initialized['dapui_config'] = ui.open
+    dap.listeners.before.event_terminated['dapui_config'] = ui.close
+    dap.listeners.before.event_exited['dapui_config'] = ui.close
 
     -- Install golang specific config
     require('dap-go').setup()
