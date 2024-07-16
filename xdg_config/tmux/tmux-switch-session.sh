@@ -5,7 +5,11 @@ tmuxsessions=$(tmux list-sessions -F "#{session_name}")
 tmux_switch_to_session() {
     session="$1"
     if [[ $tmuxsessions = *"$session"* ]]; then
-        tmux switch-client -t "$session"
+        if [[ -n "$TMUX" ]]; then
+            tmux switch-client -t "$session"
+        else
+            tmux attach-session -t "$session"
+        fi
     fi
 }
 
