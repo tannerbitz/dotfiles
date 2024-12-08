@@ -47,12 +47,6 @@ return {
         },
       }
 
-      dap.adapters.cppdbg = {
-        id = 'cppdbg',
-        type = 'executable',
-        command = vim.fn.expand('~') .. '/Documents/vscode-cpptools/extension/debugAdapters/bin/OpenDebugAD7',
-      }
-
       -- Basic debugging keymaps, feel free to change to your liking!
       vim.keymap.set('n', '<F5>', function ()
         if vim.fn.filereadable(".vscode/launch.json") then
