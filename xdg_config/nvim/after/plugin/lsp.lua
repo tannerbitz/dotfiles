@@ -49,20 +49,20 @@ end
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
-clangd = {
--- → clangd.arguments                               default: []
--- → clangd.checkUpdates                            default: false
--- → clangd.detectExtensionConflicts                default: true
--- → clangd.enableCodeCompletion                    default: true
--- → clangd.fallbackFlags                           default: []
--- → clangd.inactiveRegions.opacity                 default: 0.55
--- → clangd.inactiveRegions.useBackgroundHighlight  default: false
--- → clangd.onConfigChanged                         default: "prompt"
--- → clangd.path                                    default: "clangd"
--- → clangd.restartAfterCrash                       default: true
--- → clangd.semanticHighlighting                    default: true
--- → clangd.serverCompletionRanking                 default: true
--- → clangd.trace                                  
+  clangd = {
+    -- → clangd.arguments                               default: []
+    -- → clangd.checkUpdates                            default: false
+    -- → clangd.detectExtensionConflicts                default: true
+    -- → clangd.enableCodeCompletion                    default: true
+    -- → clangd.fallbackFlags                           default: []
+    -- → clangd.inactiveRegions.opacity                 default: 0.55
+    -- → clangd.inactiveRegions.useBackgroundHighlight  default: false
+    -- → clangd.onConfigChanged                         default: "prompt"
+    -- → clangd.path                                    default: "clangd"
+    -- → clangd.restartAfterCrash                       default: true
+    -- → clangd.semanticHighlighting                    default: true
+    -- → clangd.serverCompletionRanking                 default: true
+    -- → clangd.trace
     clangd = {
       arguments = { '--query-driver="**/qcc,**/q++"' },
     }
