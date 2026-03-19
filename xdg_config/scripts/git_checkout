@@ -1,0 +1,5 @@
+#/usr/bin/env bash
+
+branch=$(git branch -r | sed 's|^[^/]*/||' | fzf)
+
+git checkout $branch

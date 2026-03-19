@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-if [[ $# -eq 1 ]]; then
+if [[ $# -ge 1 ]]; then
     selected=$1
+    if [[ $# -eq 2 ]]; then
+        selected_name_override=$2
+    fi
 else
     selected=$(find ~/repos -maxdepth 5 -type d | fzf)
 fi
@@ -10,7 +13,8 @@ if [[ -z $selected ]]; then
     exit 0
 fi
 
-selected_name=$(basename "$selected" | tr . _)
+selected_name_evaluated=$(basename "$selected" | tr . _)
+selected_name="${selected_name_override:-${selected_name_evaluated}}"
 tmux_running=$(pgrep tmux)
 
 if ! tmux has-session -t=$selected_name 2> /dev/null; then

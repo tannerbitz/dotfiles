@@ -41,17 +41,20 @@ end, { desc = '[/] Fuzzily search in current buffer' })
 
 local builtin = require('telescope.builtin')
 local search_all_files = function()
-  builtin.find_files({ hidden=true, no_ignore=true })
+  builtin.find_files({ hidden = true, no_ignore = true })
 end
 
 local lga_shortcuts = require("telescope-live-grep-args.shortcuts")
 local grep_all = function()
   lga_shortcuts.grep_visual_selection({ postfix = " --iglob **" })
 end
+local grep_all_no_ignore = function()
+  lga_shortcuts.grep_visual_selection({ postfix = " --no-ignore --iglob **" })
+end
 
 vim.keymap.set('n', '<leader>gf', builtin.git_files, { desc = 'Search [G]it [F]iles' })
 vim.keymap.set('n', '<leader>sf', function()
-  builtin.find_files( {hidden=true} )
+  builtin.find_files({ hidden = true })
 end
 , { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sa', search_all_files, { desc = '[S]earch [A]ll Files' })
@@ -59,6 +62,8 @@ vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' 
 vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-vim.keymap.set('n', '<leader>fg', grep_all, { desc = 'Live Grep Args'})
+vim.keymap.set('n', '<leader>fg', grep_all, { desc = 'Live Grep Args' })
+vim.keymap.set('n', '<leader>se', grep_all_no_ignore, { desc = '[S]earch [E]verything' })
 
 vim.keymap.set('n', '<leader>re', builtin.lsp_references, { desc = "LSP References" })
+vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = "[Search] [K]eymaps" })
