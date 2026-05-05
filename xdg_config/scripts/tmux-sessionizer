@@ -13,7 +13,13 @@ if [[ -z $selected ]]; then
     exit 0
 fi
 
-selected_name_evaluated=$(basename "$selected" | tr . _)
+if [[ "$selected" == */.worktrees/* ]]; then
+    repo_name=$(basename "$(dirname "$(dirname "$selected")")" | tr . _)
+    branch_name=$(basename "$selected" | tr . _)
+    selected_name_evaluated="${repo_name}--${branch_name}"
+else
+    selected_name_evaluated=$(basename "$selected" | tr . _)
+fi
 selected_name="${selected_name_override:-${selected_name_evaluated}}"
 tmux_running=$(pgrep tmux)
 
