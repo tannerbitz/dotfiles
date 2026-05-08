@@ -8,6 +8,12 @@ return {
 		{
 			'neovim/nvim-lspconfig',
 			config = function()
+				local format_is_enabled = true
+				vim.api.nvim_create_user_command('FormatToggle', function()
+					format_is_enabled = not format_is_enabled
+					print('Setting autoformatting to: ' .. tostring(format_is_enabled))
+				end, {})
+
 				vim.api.nvim_create_autocmd('LspAttach', {
 					callback = function(args)
 						local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -18,7 +24,16 @@ return {
 							vim.api.nvim_create_autocmd('BufWritePre', {
 								buffer = args.buf,
 								callback = function()
-									vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
+									if not format_is_enabled then
+										return
+									end
+
+									vim.lsp.buf.format {
+										async = false,
+										filter = function(c)
+											return c.id == client.id
+										end,
+									}
 								end,
 							})
 						end
@@ -28,12 +43,12 @@ return {
 
 		},
 		-- Automatically install LSPs to stdpath for neovim
-		{ 'williamboman/mason.nvim', config = true },
-		'williamboman/mason-lspconfig.nvim',
+		{ 'williamboman/mason.nvim',           config = true },
+		{ 'williamboman/mason-lspconfig.nvim', version = "v1.32.0" },
 
 		-- Useful status updates for LSP
 		-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-		{ 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
+		{ 'j-hui/fidget.nvim',                 tag = 'legacy',     opts = {} },
 
 		-- Additional lua configuration, makes nvim stuff amazing!
 		'folke/neodev.nvim',
