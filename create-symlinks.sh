@@ -1,6 +1,6 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
-dotfiles_dir=${0:a:h}
+dotfiles_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 sudo rm -rf ~/.config/i3
 sudo rm -rf ~/.config/nvim
