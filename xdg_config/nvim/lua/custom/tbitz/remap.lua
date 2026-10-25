@@ -28,6 +28,7 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnos
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 vim.keymap.set('n', '<leader>rl', ":luafile %<CR>", { desc = "[R]un [L]uafile" })
+vim.keymap.set('n', '<leader>m', ':make<CR>:cwindow<CR>', { desc = 'Run [M]ake and open quickfix' })
 
 -- center cursor when doing half page jumps
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
