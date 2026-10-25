@@ -52,6 +52,20 @@ local grep_all_no_ignore = function()
   lga_shortcuts.grep_visual_selection({ postfix = " --no-ignore --iglob **" })
 end
 
+-- Grep in the directory of the current buffer (or the directory shown in netrw)
+local grep_buffer_dir = function()
+  local dir
+  if vim.bo.filetype == 'netrw' then
+    dir = vim.b.netrw_curdir
+  elseif vim.api.nvim_buf_get_name(0) ~= '' then
+    dir = vim.fn.expand('%:p:h')
+  end
+  if not dir or vim.fn.isdirectory(dir) == 0 then
+    dir = vim.fn.getcwd()
+  end
+  builtin.live_grep({ cwd = dir, prompt_title = 'Live Grep in ' .. vim.fn.fnamemodify(dir, ':~') })
+end
+
 vim.keymap.set('n', '<leader>gf', builtin.git_files, { desc = 'Search [G]it [F]iles' })
 vim.keymap.set('n', '<leader>sf', function()
   builtin.find_files({ hidden = true })
@@ -61,6 +75,7 @@ vim.keymap.set('n', '<leader>sa', search_all_files, { desc = '[S]earch [A]ll Fil
 vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>sc', grep_buffer_dir, { desc = '[S]earch by grep in [C]urrent buffer dir' })
 vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>fg', grep_all, { desc = 'Live Grep Args' })
 vim.keymap.set('n', '<leader>se', grep_all_no_ignore, { desc = '[S]earch [E]verything' })
